@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         checkIfEmailVerified();
-                        Intent intent = new Intent(MainActivity.this, main.class);
-                        startActivity(intent);
                     } else {
                         Toast.makeText(MainActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
@@ -77,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         private void checkIfEmailVerified(){
             if (FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
                 Toast.makeText(MainActivity.this, "Login berhasil", Toast.LENGTH_SHORT);
-                //getDataUser();
+                Intent intent = new Intent(MainActivity.this, main.class);
+                startActivity(intent);
             } else {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(MainActivity.this, "E-mail belum tereverifikasi, silahkan cek email Anda", Toast.LENGTH_SHORT).show();

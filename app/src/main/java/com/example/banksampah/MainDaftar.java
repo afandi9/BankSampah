@@ -86,6 +86,8 @@ public class MainDaftar extends AppCompatActivity {
                             //display some message here
                             sendVerif();
                             Toast.makeText(MainDaftar.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainDaftar.this,MainActivity.class);
+                            startActivity(intent);
                         }else{
                             //display some message here
                             Toast.makeText(MainDaftar.this,"Registration Error",Toast.LENGTH_LONG).show();
