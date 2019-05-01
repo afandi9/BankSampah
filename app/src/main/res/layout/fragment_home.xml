@@ -4,26 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <com.google.android.gms.maps.MapView
+    <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="350dp" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_tambah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right|end"
-            android:src="@drawable/add"
-            app:fabSize="normal" />
-    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_tambah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|end"
+        android:src="@drawable/add"
+        app:fabSize="normal" />
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sampah"
+            android:layout_width="match_parent"
+            android:layout_height="564dp" >
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
 
 </FrameLayout>

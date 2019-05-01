@@ -1,4 +1,4 @@
-package com.example.banksampah.Model;
+package com.example.banksampah;
 
 public class Sampah {
     private String jenis_sampah;

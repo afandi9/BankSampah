@@ -1,15 +1,13 @@
-package com.example.banksampah.Adapter;
+package com.example.banksampah;
 
-import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.banksampah.Model.Sampah;
-import com.example.banksampah.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,6 +24,8 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
     {
         TextView textViewJenis, textViewHarga;
         ImageView imageViewGambar;
+
+
 
 
         public ViewHolder(View itemView) {
@@ -52,14 +52,6 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
         holder.textViewHarga.setText(dataList.get(position).getHarga_sampah());
         Picasso.get().load(dataList.get(position).getFoto_sampah()).into(holder.imageViewGambar);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Toast.makeText(getActivity(), "Item " + position + " is clicked.", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

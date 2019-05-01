@@ -1,4 +1,4 @@
-package com.example.banksampah.Fragment;
+package com.example.banksampah;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
