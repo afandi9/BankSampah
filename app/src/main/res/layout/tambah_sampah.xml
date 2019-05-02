@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:hint="Harga Sampah"
         android:textSize="18sp" />
-
+    --coba aja
     <ImageView
         android:id="@+id/btn_img"
         android:layout_width="match_parent"
