@@ -33,10 +33,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     MapView mMapView;
     GoogleMap googleMap;
-    Marker marker1;
+    Marker marker1, marker2;
     FloatingActionButton btn_tambah;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
@@ -83,64 +83,76 @@ public class HomeFragment extends Fragment{
                 } else {
                     Toast.makeText(getContext(), R.string.error_permission_map, Toast.LENGTH_LONG).show();
                 }
-                LatLng sydney = new LatLng(-34, 151);
+                LatLng filkom = new LatLng(-7.953688, 112.61467);
+                LatLng fisip = new LatLng(-7.950256 , 112.611998);
 
 
-                marker1 = googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker 1").snippet("Marker Description"));
+                marker1 = googleMap.addMarker(new MarkerOptions().position(filkom).title("Marker 1").snippet("FILKOM"));
                 marker1.setTag(0);
 
-                btn_tambah.setOnClickListener(new View.OnClickListener() {
+
+                marker2 = googleMap.addMarker(new MarkerOptions().position(fisip).title("FISIP").snippet("FISIP"));
+                marker2.setTag(0);
+
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), Main3Activity.class);
-                        intent.putExtra("marker", marker1.getTitle());
-                       startActivity(intent);
+                    public boolean onMarkerClick(Marker marker) {
+                        String childMarker = null;
+                        if (marker.equals(marker1)){
+                            childMarker = marker1.getTitle();
+                        }
+                        if (marker.equals(marker2)){
+                            childMarker = marker2.getTitle();
+                        }
+                        final String finalChildMarker = childMarker;
+                        btn_tambah.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getActivity(), Main3Activity.class);
+                                intent.putExtra("marker", finalChildMarker);
+                                startActivity(intent);
+                            }
+                        });
+                        database.child("sampah").child(childMarker).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                sampahArrayList = new ArrayList<>();
+                                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+                                    Sampah post = noteDataSnapshot.getValue(Sampah.class);
+                                    post.setId(noteDataSnapshot.getKey());
+
+                                    sampahArrayList.add(post);
+                                }
+
+                                adapter = new AdapterSampah(sampahArrayList);
+
+                                rvView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+                            }
+                        });
+                        return false;
                     }
                 });
-
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(filkom).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
             }
         });
 
-        tampilData();
+
+
+      // tampilData();
 
         return view;
 
     }
-
-    public void tampilData(){
-
-        database.child("sampah").child("Marker 1").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                sampahArrayList = new ArrayList<>();
-                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-
-                    Sampah post = noteDataSnapshot.getValue(Sampah.class);
-                    post.setId(noteDataSnapshot.getKey());
-
-                    sampahArrayList.add(post);
-                }
-
-                adapter = new AdapterSampah(sampahArrayList);
-
-                rvView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
-            }
-
-
-        });
-    }
-
 
     @Override
     public void onResume() {
@@ -165,6 +177,4 @@ public class HomeFragment extends Fragment{
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-
-
 }
