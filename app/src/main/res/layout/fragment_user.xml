@@ -6,7 +6,7 @@
     tools:context=".UserFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_sampah"
+        android:id="@+id/rv_sampahGabungan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"

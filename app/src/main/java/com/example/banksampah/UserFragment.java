@@ -38,14 +38,10 @@ import java.util.ArrayList;
 
 public class UserFragment extends Fragment {
 
-    MapView mMapView;
-    GoogleMap googleMap;
-    Marker marker1, marker2;
-    FloatingActionButton btn_tambah;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
 
-    private RecyclerView rvView;
+    private RecyclerView rvSampahGabungan;
     private ArrayList<Sampah> sampahArrayList;
 
     @Nullable
@@ -59,9 +55,9 @@ public class UserFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        rvView = (RecyclerView) view.findViewById(R.id.rv_sampah);
+        rvSampahGabungan = (RecyclerView) view.findViewById(R.id.rv_sampahGabungan);
         int jlh_kolom = 2;
-        rvView.setLayoutManager(new GridLayoutManager(getContext(), jlh_kolom));
+        rvSampahGabungan.setLayoutManager(new GridLayoutManager(getContext(), jlh_kolom));
 //        rvView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
 
@@ -85,9 +81,34 @@ public class UserFragment extends Fragment {
                     sampahArrayList.add(post);
                 }
 
-                adapter = new AdapterSampah(sampahArrayList);
+                adapter = new AdapterSampahGabungan(sampahArrayList);
 
-                rvView.setAdapter(adapter);
+                rvSampahGabungan.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println(databaseError.getDetails() + " " + databaseError.getMessage());
+            }
+        });
+
+        database.child("sampah").child("FISIP").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+                    Sampah post = noteDataSnapshot.getValue(Sampah.class);
+                    post.setId(noteDataSnapshot.getKey());
+
+                    sampahArrayList.add(post);
+                }
+
+                adapter = new AdapterSampahGabungan(sampahArrayList);
+
+                rvSampahGabungan.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
             }
