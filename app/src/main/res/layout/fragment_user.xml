@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_sampah"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_user" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
