@@ -11,14 +11,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <EditText
-        android:id="@+id/et_jenis"
+        android:id="@+id/et_kuantitas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Jenis Sampah"
-        android:paddingBottom="30dp"
-        android:textSize="24sp" />
-
+        android:hint="Berat Sampah (kg)"
+        android:textSize="18sp" />
     <EditText
         android:id="@+id/et_harga"
         android:layout_width="match_parent"

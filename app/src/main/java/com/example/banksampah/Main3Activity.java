@@ -11,9 +11,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,12 +30,16 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
-public class Main3Activity extends AppCompatActivity {
+public class Main3Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private DatabaseReference db;
-    private EditText editTextJenis, editTextHarga;
+    private EditText editTextHarga, editTextKuantitas;
+    private String stringJenis = "Plastik";
     private Button btnPost,btnSelect;
 
     private FirebaseStorage storage;
@@ -53,7 +60,15 @@ public class Main3Activity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://banksampah-33c3b.appspot.com");
 
-        editTextJenis = (EditText) findViewById(R.id.et_jenis);
+        Spinner spinner = findViewById(R.id.spinner1);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.numbers, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setSelection(0);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        editTextKuantitas = (EditText) findViewById(R.id.et_kuantitas);
         editTextHarga = (EditText) findViewById(R.id.et_harga);
         btnPost = (Button) findViewById(R.id.btn_submit);
 
@@ -94,12 +109,12 @@ public class Main3Activity extends AppCompatActivity {
                                     Uri downloadUrl = uri;
 
                                     String sampah = db.push().getKey();
-                                    Sampah post = new Sampah(editTextJenis.getText().toString(), editTextHarga.getText().toString(),downloadUrl.toString());
+                                    String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                                    Sampah post = new Sampah(stringJenis, editTextHarga.getText().toString(),downloadUrl.toString(),date,editTextKuantitas.getText().toString());
 
-                                    db.child(getIntent().getStringExtra("marker")).push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    db.child(getIntent().getStringExtra("arrayMarker")).push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            editTextJenis.setText("");
                                             editTextHarga.setText("");
                                             Snackbar.make(findViewById(R.id.btn_submit), "Data berhasil ditambahkan", Snackbar.LENGTH_LONG).show();
                                         }
@@ -151,4 +166,13 @@ public class Main3Activity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        stringJenis = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
