@@ -1,5 +1,7 @@
 package com.example.banksampah;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -57,7 +59,24 @@ public class main extends AppCompatActivity implements BottomNavigationView.OnNa
         return loadFragment(fragment);
     }
 
-
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are You Sure Want to Exit?")
+                .setCancelable(true)//tidak bisa tekan tombol back
+                //jika pilih yess
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        moveTaskToBack(true);
+                        finish();
+                    }
+                })
+                //jika pilih no
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
 
 
 }
