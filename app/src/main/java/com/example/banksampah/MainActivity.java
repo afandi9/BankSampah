@@ -1,6 +1,7 @@
 package com.example.banksampah;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +17,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText et_u_email, et_u_pass;
     Button btn_login;
-    TextView btn_daftar;
     FirebaseAuth mAuth;
 
     @Override
@@ -30,19 +32,22 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        btn_daftar = (TextView) findViewById(R.id.btn_dftr);
-        btn_login = (Button) findViewById(R.id.btn_masuk);
+       btn_login = (Button) findViewById(R.id.btn_masuk);
         et_u_email = (EditText) findViewById(R.id.et_username);
         et_u_pass = (EditText) findViewById(R.id.et_password);
 
-
-        btn_daftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MainDaftar.class);
-                startActivity(intent);
-            }
-        });
+        if (mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(MainActivity.this, main.class));
+            finish();
+        }
+        toRegister();
+//        btn_daftar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, MainDaftar.class);
+//                startActivity(intent);
+//            }
+//        });
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void toRegister(){
+        TextView textView = (TextView) findViewById(R.id.btn_dftr);
+        textView.setText("Belum memiliki akun? Daftar disini");
+// Membuat span dengan tampilan berbeda dan dapat diklik
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("Daftar"), Color.BLUE,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                startActivity(new Intent(MainActivity.this, MainDaftar.class));
+                            }
+                        }).into(textView);
+    }
 
     private void loginUser() {
         String email = et_u_email.getText().toString().trim();
