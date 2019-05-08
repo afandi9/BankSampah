@@ -53,9 +53,11 @@ public class HomeFragment extends Fragment {
     private String geoCode;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
-    private int lattitude, longitude;
+    private Double lattitude[], longitude[];
     private RecyclerView rvView;
     private ArrayList<Sampah> sampahArrayList;
+    LatLng filkom, fisip;
+
 
     int i = 0;
     @Nullable
@@ -94,6 +96,8 @@ public class HomeFragment extends Fragment {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
                 arrayMarker=new Marker[5];
+                tempat();
+
                 if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
@@ -104,12 +108,9 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.error_permission_map, Toast.LENGTH_LONG).show();
                 }
 
-                LatLng filkom = new LatLng(-7.953688, 112.61467);
-                LatLng fisip = new LatLng(-7.950256 , 112.611998);
 
-                Log.d("filkom",geoCode+"");
                 arrayMarker[0] = googleMap.addMarker(new MarkerOptions().position(filkom).title("FILKOM")
-                        .snippet("uu"));
+                        .snippet("FILKOM"));
                 arrayMarker[0].setTag(0);
 
 
@@ -119,14 +120,18 @@ public class HomeFragment extends Fragment {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         String childMarker = null;
-                        for (int i = 0; i< arrayMarker.length; i++){
+                        for (int i = 0; i< 5; i++){
                         if (marker.equals(arrayMarker[i])) {
+                            Log.d("marker lewat ", arrayMarker[i]+"");
                             childMarker = arrayMarker[i].getTitle();
                             for (int a = 0;a<50;a++){
+                                Log.d("ini a"+a,"ini i"+i);
                                 if (geoCode == null) {
-                                    cekTempatMarker(-7.953688, 112.61467);
+                                    cekTempatMarker(lattitude[i], longitude[i]);
                                 } else {
+                                    cekTempatMarker(lattitude[i], longitude[i]);
                                     arrayMarker[i].setSnippet(geoCode);
+                                    break;
                                 }
                             }
                         }
@@ -149,7 +154,6 @@ public class HomeFragment extends Fragment {
 
                                     Sampah post = noteDataSnapshot.getValue(Sampah.class);
                                     post.setId(noteDataSnapshot.getKey());
-                                        Log.d("Filkom dalam", geoCode+"");
                                     sampahArrayList.add(post);
                                 }
 
@@ -218,6 +222,16 @@ public class HomeFragment extends Fragment {
                         }
                 }
             });
+    }
+
+    public void tempat(){
+        lattitude=new Double[5];
+        longitude=new Double[5];
+        filkom = new LatLng(-7.953688, 112.61467);
+        fisip = new LatLng(-6.950256 , 116.611998);
+        lattitude[0]=-7.953688; longitude[0]=112.61467;
+        lattitude[1]=-6.950256; longitude[1]=116.611998;
+
     }
 
     @Override
