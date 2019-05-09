@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.banksampah.R;
@@ -43,7 +44,6 @@ public class UserFragment extends Fragment {
 
     private RecyclerView rvSampahGabungan;
     private ArrayList<Sampah> sampahArrayList;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class UserFragment extends Fragment {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
         database = FirebaseDatabase.getInstance().getReference();
+
 
         rvSampahGabungan = (RecyclerView) view.findViewById(R.id.rv_sampahGabungan);
         int jlh_kolom = 2;
@@ -66,6 +66,7 @@ public class UserFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 
         database.child("sampah").child("Marker 1").addValueEventListener(new ValueEventListener() {

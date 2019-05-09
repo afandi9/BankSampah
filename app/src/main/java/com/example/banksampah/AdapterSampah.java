@@ -1,5 +1,7 @@
 package com.example.banksampah;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder> {
     private ArrayList<Sampah> dataList;
+    private Context mContext;
 
     public AdapterSampah(ArrayList<Sampah> data)
     {
@@ -48,6 +51,11 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
     @Override
     public void onBindViewHolder(AdapterSampah.ViewHolder holder, final int position)
     {
+//
+//        Intent intent = new Intent(mContext, imageSampah.class);
+//        intent.putExtra("image_url", dataList.get(position).getJenis_sampah());
+//        intent.putExtra("image_name", dataList.get(position).getFoto_sampah());
+//        mContext.startActivity(intent);
         holder.textViewJenis.setText(dataList.get(position).getJenis_sampah());
         holder.textViewHarga.setText(dataList.get(position).getHarga_sampah());
         Picasso.get().load(dataList.get(position).getFoto_sampah()).into(holder.imageViewGambar);

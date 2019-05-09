@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.VisibilityAwareImageButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,7 +50,9 @@ public class HomeFragment extends Fragment {
     MapView mMapView;
     GoogleMap googleMap;
     Marker marker1, marker2, arrayMarker[];
+    FloatingActionButton tambah_bank;
     FloatingActionButton btn_tambah;
+
     private String geoCode;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
@@ -65,7 +68,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
-        btn_tambah = (FloatingActionButton) view.findViewById(R.id.btn_tambah);
+        btn_tambah =  view.findViewById(R.id.btn_tambah);
+//        tambah_bank = view.findViewById(R.id.tambah_bank);
+
         mMapView.onCreate(savedInstanceState);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -178,7 +183,13 @@ public class HomeFragment extends Fragment {
         });
 
 
-
+//        tambah_bank.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), tambah_bank_sampah.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
       // tampilData();
 
         return view;

@@ -19,4 +19,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_user">Hello user fragment</string>
     <string name="error_permission_map">Error</string>
+    <string name="title_activity_image_sampah">imageSampah</string>
+    <string name="title_activity_tambah_bank_sampah">tambah_bank_sampah</string>
 </resources>
