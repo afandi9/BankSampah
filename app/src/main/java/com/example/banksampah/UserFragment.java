@@ -69,7 +69,7 @@ public class UserFragment extends Fragment {
 
 
 
-        database.child("sampah").child("Marker 1").addValueEventListener(new ValueEventListener() {
+        database.child("sampah").child("FILKOM").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -95,7 +95,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        database.child("sampah").child("FISIP").addValueEventListener(new ValueEventListener() {
+        database.child("sampah").child("Polinema").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

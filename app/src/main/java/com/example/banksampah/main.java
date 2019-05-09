@@ -30,7 +30,6 @@ public class main extends AppCompatActivity implements BottomNavigationView.OnNa
         setSupportActionBar(toolbar);
 
 
-
         loadFragment(new HomeFragment());
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -73,9 +72,6 @@ public class main extends AppCompatActivity implements BottomNavigationView.OnNa
                 fragment = new HomeFragment();
                 break;
             case R.id.navigation_dashboard:
-                fragment = new UserFragment();
-                break;
-            case R.id.navigation_notifications:
                 fragment = new UserFragment();
                 break;
         }

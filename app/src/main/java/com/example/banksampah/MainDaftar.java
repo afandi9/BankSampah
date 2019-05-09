@@ -42,6 +42,7 @@ public class MainDaftar extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
+
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
 

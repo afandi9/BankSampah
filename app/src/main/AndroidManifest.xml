@@ -53,10 +53,6 @@
         <activity android:name=".MainDaftar" />
         <activity android:name=".main" />
         <activity
-            android:name=".imageSampah"
-            android:label="@string/title_activity_image_sampah"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".tambah_bank_sampah"
             android:label="@string/title_activity_tambah_bank_sampah"
             android:theme="@style/AppTheme.NoActionBar"></activity>
