@@ -21,4 +21,5 @@
     <string name="error_permission_map">Error</string>
     <string name="title_activity_image_sampah">imageSampah</string>
     <string name="title_activity_tambah_bank_sampah">tambah_bank_sampah</string>
+    <string name="title_activity_sampah_click">sampahClick</string>
 </resources>
