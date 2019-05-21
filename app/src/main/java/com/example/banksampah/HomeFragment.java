@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(true);
                 } else {
-                    Toast.makeText(getContext(), R.string.error_permission_map, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), R.string.error_permission_map, Toast.LENGTH_LONG).show();
                 }
 
 
@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                 arrayMarker[0].setTag(0);
 
 
-                arrayMarker[1] = googleMap.addMarker(new MarkerOptions().position(fisip).title("FISIP").snippet("FISIP"));
+                arrayMarker[1] = googleMap.addMarker(new MarkerOptions().position(fisip).title("Polinema").snippet("Polinema"));
                 arrayMarker[1].setTag(0);
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -260,9 +260,9 @@ public class HomeFragment extends Fragment {
         lattitude=new Double[5];
         longitude=new Double[5];
         filkom = new LatLng(-7.953688, 112.61467);
-        fisip = new LatLng(-6.950256 , 116.611998);
+        fisip = new LatLng(-7.946049 , 112.615671);
         lattitude[0]=-7.953688; longitude[0]=112.61467;
-        lattitude[1]=-6.950256; longitude[1]=116.611998;
+        lattitude[1]=-7.946049; longitude[1]=112.615671;
 
     }
 
