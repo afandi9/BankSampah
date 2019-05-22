@@ -58,7 +58,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_sampah);
-
+        final Sampah smph = (Sampah) getIntent().getSerializableExtra("data");
         parent_name = getIntent().getStringExtra("parent_name");
 
 
@@ -90,15 +90,27 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
                 chooseImage();
             }
         });
-
-        btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tambah_sampah();
-            }
-        });
-
-
+        if(smph != null){
+            editTextHarga.setText(smph.getHarga_sampah());
+            editTextKuantitas.setText(smph.getKuantitas_sampah());
+            btnPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    smph.setJenis_sampah(stringJenis);
+                    smph.setKuantitas_sampah(editTextKuantitas.getText().toString());
+                    smph.setHarga_sampah(editTextHarga.getText().toString());
+                    updateSampah(smph);
+                }
+            });
+        }
+        else{
+            btnPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tambah_sampah();
+                }
+            });
+        }
 
     }
     public void tambah_sampah() {
@@ -176,6 +188,39 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    public void updateSampah(final Sampah smph){
+
+        storageReference = storage.getReferenceFromUrl(smph.getFoto_sampah());
+        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                StorageReference storagerefere = storage.getReferenceFromUrl("gs://banksampah-33c3b.appspot.com");
+                final StorageReference refe = storagerefere.child("sampah/"+UUID.randomUUID().toString());
+                refe.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        refe.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Uri downloadUrl = uri;
+                                Sampah smp = new Sampah(parent_name, smph.getJenis_sampah(), smph.getHarga_sampah(),downloadUrl.toString(),smph.getDate_Sampah(),smph.getKuantitas_sampah());
+                                ///
+                                db.child(parent_name).child(smph.getId()).setValue(smp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Snackbar.make(findViewById(R.id.btn_submit), "Data berhasil diupdate", Snackbar.LENGTH_LONG).show();
+                                    }
+                                });
+
+                                ///
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
 

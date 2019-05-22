@@ -1,6 +1,8 @@
 package com.example.banksampah;
 
-public class Sampah {
+import java.io.Serializable;
+
+public class Sampah implements Serializable {
     private String jenis_sampah;
     private String foto_sampah;
     private String harga_sampah;

@@ -1,5 +1,6 @@
 package com.example.banksampah;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -83,7 +85,28 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
             }
         });
 
+        holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final Dialog dialog = new Dialog(mContext);
+                dialog.setContentView(R.layout.dialog_del_up);
+                dialog.show();
 
+                Button updBtn = (Button) dialog.findViewById(R.id.btnUpdate);
+
+                updBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(mContext, Main3Activity.class);
+                        intent.putExtra("data" , dataList.get(position));
+                        mContext.startActivity(intent);
+                    }
+                });
+
+                return true;
+            }
+        });
     }
 
     @Override
