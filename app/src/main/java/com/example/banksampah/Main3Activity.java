@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,8 +23,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +43,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
 
     private DatabaseReference db;
     private EditText editTextHarga, editTextKuantitas;
-    private String stringJenis = "Plastik";
+    private String stringJenis = "Plastik", parent_name;
     private Button btnPost,btnSelect;
 
     private FirebaseStorage storage;
@@ -48,15 +52,20 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
 
     private Uri filePath;
     private ImageView imageView;
+    private Long countFb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_sampah);
 
+        parent_name = getIntent().getStringExtra("parent_name");
+
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         db = FirebaseDatabase.getInstance().getReference("sampah");
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://banksampah-33c3b.appspot.com");
 
@@ -68,7 +77,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        editTextKuantitas = (EditText) findViewById(R.id.et_kuantitas);
+        //editTextKuantitas = (EditText) findViewById(R.id.et_kuantitas);
         editTextHarga = (EditText) findViewById(R.id.et_harga);
         btnPost = (Button) findViewById(R.id.btn_submit);
 
@@ -90,6 +99,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
         });
 
 
+
     }
     public void tambah_sampah() {
         if (filePath != null){
@@ -98,6 +108,9 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
             progressDialog.show();
 
             final StorageReference ref = storageReference.child("sampah/"+ UUID.randomUUID().toString());
+
+
+
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -110,7 +123,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
 
                                     String sampah = db.push().getKey();
                                     String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                                    Sampah post = new Sampah(stringJenis, editTextHarga.getText().toString(),downloadUrl.toString(),date,editTextKuantitas.getText().toString());
+                                    Sampah post = new Sampah(parent_name, stringJenis, editTextHarga.getText().toString(),downloadUrl.toString(),date,editTextKuantitas.getText().toString());
 
                                     db.child(getIntent().getStringExtra("arrayMarker")).push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

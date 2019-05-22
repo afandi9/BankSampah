@@ -55,7 +55,11 @@
         <activity
             android:name=".tambah_bank_sampah"
             android:label="@string/title_activity_tambah_bank_sampah"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".sampahClick"
+            android:label="@string/title_activity_sampah_click"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

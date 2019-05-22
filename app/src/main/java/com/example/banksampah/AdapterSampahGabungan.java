@@ -24,9 +24,6 @@ public class AdapterSampahGabungan extends RecyclerView.Adapter<AdapterSampahGab
         TextView textViewJenis, textViewHarga;
         ImageView imageViewGambar;
 
-
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewJenis = (TextView) itemView.findViewById(R.id.tv_jenis);
