@@ -70,30 +70,30 @@ public class tambah_bank_sampah extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("test nih ada", "");
-//                db.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        countFb = dataSnapshot.getValue(Long.class);
-//                        Log.d("countFb udah ada", "" + countFb);
-//                        db.child("count").setValue(countFb + 1);
-//                        db.child(editText_tambah_bank.getText() + "").child("Location").child("Lat").setValue(longitude);
-//                        db.child(editText_tambah_bank.getText() + "").child("Location").child("Long").setValue(latitude);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
+                db.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        countFb = dataSnapshot.getValue(Long.class);
+                        Log.d("countFb udah ada", "" + countFb);
+                        db.child("count").setValue(countFb + 1);
+                        db.child(editText_tambah_bank.getText() + "").child("Location").child("Lat").setValue(longitude);
+                        db.child(editText_tambah_bank.getText() + "").child("Location").child("Long").setValue(latitude);
+                    }
 
-                Log.d(latitude+" ini longitude","");
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                Log.d(" ini longitude",longitude+"");
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps();
 
                 } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     getLocation();
-                    Log.d(latitude+" ini latitude","");
+                    Log.d(" ini latitude",latitude+"");
                 }
             }
         });

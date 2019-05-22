@@ -98,19 +98,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-        db.child("count").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                countFb = dataSnapshot.getValue(Long.class);
-                Log.d("countFb udah ada", ""+countFb);
-                db.child("count").setValue(countFb+1);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
     }
     public void tambah_sampah() {
