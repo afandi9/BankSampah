@@ -7,12 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".tambah_bank_sampah"
     tools:showIn="@layout/tambah_bank_sampah">
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/editText_tambah_bank"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:hint="masukkan nama bank">
-    </android.support.design.widget.TextInputEditText>
+    </EditText>
     <Button
         android:id="@+id/button_tambah_bank"
         android:layout_width="wrap_content"

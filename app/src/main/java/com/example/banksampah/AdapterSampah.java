@@ -75,6 +75,8 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
                 intent.putExtra("harga_sampah", dataList.get(position).getHarga_sampah());
                 intent.putExtra("berat_sampah", dataList.get(position).getKuantitas_sampah());
                 intent.putExtra("gambar_sampah", dataList.get(position).getFoto_sampah());
+                intent.putExtra("id_sampah", dataList.get(position).getId());
+
 
                 mContext.startActivity(intent);
             }

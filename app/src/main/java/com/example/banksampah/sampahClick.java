@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +15,40 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class sampahClick extends AppCompatActivity {
+
+    String idSampah = null,namaSampah = "FILKOM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sampah_click);
 
-
         getIncomingIntent();
+
+        Button jualSampah = findViewById(R.id.jual_sampah);
+        jualSampah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idSampah = getIntent().getStringExtra("id_sampah");
+                namaSampah = getIntent().getStringExtra("parent_name");
+                hapusAkun(idSampah);
+            }
+        });
     }
 
+    private void hapusAkun(String idSampah){
+        DatabaseReference hapusAkun = FirebaseDatabase.getInstance().getReference("sampah");
+
+        Log.d("data sudah dihapus", idSampah+" "+namaSampah);
+//        hapusAkun.child(namaSampah).child(idSampah).removeValue();
+        if (hapusAkun.child(idSampah).child(getIntent().getStringExtra("id_sampah"))==null){
+            Log.d("data sudah dihapus", "yey");
+        }
+    }
     private void getIncomingIntent(){
 //        Log.d("coba", "getIncomingIntent: checking for incoming intents.");
 

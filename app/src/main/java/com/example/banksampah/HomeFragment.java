@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     FloatingActionButton tambah_bank;
     FloatingActionButton btn_tambah;
 
-    private String geoCode;
+    private String geoCode, parent_name;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
     private Double lattitude[], longitude[];
@@ -131,15 +131,19 @@ public class HomeFragment extends Fragment {
                                 Log.d("ini a"+a,"ini i"+i);
                                 if (geoCode == null) {
                                     cekTempatMarker(lattitude[i], longitude[i]);
+
                                 } else {
                                     cekTempatMarker(lattitude[i], longitude[i]);
                                     arrayMarker[i].setSnippet(geoCode);
                                     break;
-                                }
+                                    }
                             }
                         }
                         }
                         final String finalChildMarker = childMarker;
+                        parent_name = childMarker;
+                        Intent intent = new Intent(getContext(), Main3Activity.class);
+                        intent.putExtra("parent_name", parent_name);
                         btn_tambah.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -151,13 +155,13 @@ public class HomeFragment extends Fragment {
                         database.child("sampah").child(childMarker).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
                                 sampahArrayList = new ArrayList<>();
                                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
 
                                     Sampah post = noteDataSnapshot.getValue(Sampah.class);
                                     post.setId(noteDataSnapshot.getKey());
                                     sampahArrayList.add(post);
+
                                 }
 
                                 adapter = new AdapterSampah(getContext(), sampahArrayList);

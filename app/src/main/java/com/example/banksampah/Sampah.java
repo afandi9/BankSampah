@@ -6,6 +6,7 @@ public class Sampah {
     private String harga_sampah;
     private String kuantitas_sampah;
     private String date_Sampah;
+    private String parent_name;
 
     public String getId() {
         return id;
@@ -17,7 +18,8 @@ public class Sampah {
 
     private String id;
 
-    public Sampah(String jenis_sampah, String harga_sampah, String foto_sampah, String date_sampah, String kuantitas_sampah) {
+    public Sampah(String parent_name, String jenis_sampah, String harga_sampah, String foto_sampah, String date_sampah, String kuantitas_sampah) {
+        this.parent_name = parent_name;
         this.kuantitas_sampah = kuantitas_sampah;
         this.date_Sampah = date_sampah;
         this.jenis_sampah = jenis_sampah;
@@ -26,6 +28,14 @@ public class Sampah {
     }
 
     public Sampah() {
+    }
+
+    public String getParent_name() {
+        return parent_name;
+    }
+
+    public void setParent_name(String parent_name) {
+        this.parent_name = parent_name;
     }
 
     public String getKuantitas_sampah() {
