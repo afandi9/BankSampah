@@ -20,9 +20,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="601dp"
+            android:src="@drawable/add"
             android:text="Tambah Bank Sampah" />
 
         <com.google.android.gms.maps.MapView
@@ -41,8 +42,8 @@
             android:layout_alignBottom="@+id/mapView"
             android:layout_alignParentEnd="true"
             android:layout_gravity="bottom|right|end"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="225dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="-357dp"
             android:src="@drawable/add"
             app:fabSize="normal" />
 
@@ -52,8 +53,10 @@
             android:layout_height="162dp"
             android:layout_below="@+id/mapView"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="-2dp"
             android:layout_marginBottom="0dp"
             android:orientation="horizontal">

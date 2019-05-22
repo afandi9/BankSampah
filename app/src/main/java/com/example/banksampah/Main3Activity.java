@@ -77,7 +77,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        editTextKuantitas = (EditText) findViewById(R.id.et_kuantitas);
+        //editTextKuantitas = (EditText) findViewById(R.id.et_kuantitas);
         editTextHarga = (EditText) findViewById(R.id.et_harga);
         btnPost = (Button) findViewById(R.id.btn_submit);
 

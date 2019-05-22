@@ -57,7 +57,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
     private Double lattitude[], longitude[];
-    double lattitudeBank, longitudeBank;
     private RecyclerView rvView;
     private ArrayList<Sampah> sampahArrayList;
     LatLng filkom, fisip;
@@ -66,16 +65,19 @@ public class HomeFragment extends Fragment {
     int i = 0;
     @Nullable
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
         btn_tambah =  view.findViewById(R.id.btn_tambah);
-        tambah_bank = view.findViewById(R.id.tambah_bank);
-
-
+//        tambah_bank = view.findViewById(R.id.tambah_bank);
 
         mMapView.onCreate(savedInstanceState);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        }, 10000);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -175,7 +177,7 @@ public class HomeFragment extends Fragment {
 
                                 }
 
-                                adapter = new AdapterSampah(getContext(), sampahArrayList);
+                                adapter = new AdapterSampah(getContext(),sampahArrayList);
 
                                 rvView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
@@ -197,37 +199,14 @@ public class HomeFragment extends Fragment {
         });
 
 
-        tambah_bank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), tambah_bank_sampah.class);
-                getContext().startActivity(intent);
-                Bundle extras;
-                if (savedInstanceState == null)
-                {
-//fetching extra data passed with intents in a Bundle type variable
-                    extras = getActivity().getIntent().getExtras();
-                    if(extras == null)
-                    {        longitudeBank= 0;
-                              lattitudeBank= 0;
-                    }
-                    else
-
-                    {            /* fetching the string passed with intent using ‘extras’*/
-
-                        longitudeBank= extras.getDouble("longitude");
-                        lattitudeBank= extras.getDouble("lattitude");
-                        Log.d(longitudeBank+" ini longitude",lattitudeBank+" ini lattitude");
-
-                    }
-
-                }
-
-            }
-        });
+//        tambah_bank.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), tambah_bank_sampah.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
       // tampilData();
-
-
 
         return view;
 
@@ -281,8 +260,6 @@ public class HomeFragment extends Fragment {
         lattitude[1]=-7.946049; longitude[1]=112.615671;
 
     }
-
-
 
     @Override
     public void onResume() {

@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Bank Sampah</string>
-    <string name="title_activity_main">main</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <string-array name="numbers">
         <item>Plastik</item>
@@ -16,10 +14,6 @@
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hello_user">Hello user fragment</string>
-    <string name="error_permission_map">Error</string>
-    <string name="title_activity_image_sampah">imageSampah</string>
     <string name="title_activity_tambah_bank_sampah">tambah_bank_sampah</string>
     <string name="title_activity_sampah_click">sampahClick</string>
 </resources>

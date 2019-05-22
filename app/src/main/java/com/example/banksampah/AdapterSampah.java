@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +27,8 @@ public class AdapterSampah extends RecyclerView.Adapter<AdapterSampah.ViewHolder
         this.mContext = context;
         this.dataList = data;
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
