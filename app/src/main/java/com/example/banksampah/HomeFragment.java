@@ -46,6 +46,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class HomeFragment extends Fragment {
     MapView mMapView;
     GoogleMap googleMap;
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment {
     FloatingActionButton tambah_bank;
     FloatingActionButton btn_tambah;
 
-    private String geoCode, parent_name;
+    public String geoCode, parent_name;
     private RecyclerView.Adapter adapter;
     private DatabaseReference database;
     private Double lattitude[], longitude[];
@@ -61,9 +63,13 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvView;
     private ArrayList<Sampah> sampahArrayList;
     LatLng filkom, fisip;
+    long count = 0,countBank=0;
+    private ArrayList<Marker> marker = new ArrayList<>();
+    private ArrayList<LatLng> latLngs = new ArrayList<>();
 
-
-    int i = 0;
+    private HomeFragment listener;
+    int countFb;
+    private int i = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -96,7 +102,7 @@ public class HomeFragment extends Fragment {
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap mMap) {
+            public void onMapReady(final GoogleMap mMap) {
                 googleMap = mMap;
                 arrayMarker=new Marker[5];
                 tempat();
@@ -111,49 +117,69 @@ public class HomeFragment extends Fragment {
                     //Toast.makeText(getContext(), R.string.error_permission_map, Toast.LENGTH_LONG).show();
                 }
 
-
-                arrayMarker[0] = googleMap.addMarker(new MarkerOptions().position(filkom).title("FILKOM")
-                        .snippet("FILKOM"));
-                arrayMarker[0].setTag(0);
-
-
-                arrayMarker[1] = googleMap.addMarker(new MarkerOptions().position(fisip).title("Polinema").snippet("Polinema"));
-                arrayMarker[1].setTag(0);
                 Intent intent = new Intent(getContext(), Main3Activity.class);
                 intent.putExtra("parent_name", parent_name);
                 btn_tambah.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), Main3Activity.class);
-                        intent.putExtra("arrayMarker", "Polinema");
+                        intent.putExtra("arrayMarker", "1");
                         startActivity(intent);
                     }
                 });
+                database.child("sampah").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        count = dataSnapshot.child("count").getValue(long.class);
+
+                        for (int i =0; i<count; i++){
+                            latLngs.add(new LatLng(dataSnapshot.child((i+1)+"").child("Location")
+                                    .child("lat").getValue(Double.class)
+                                    ,(dataSnapshot.child((i+1)+"").child("Location")
+                                    .child("long").getValue(Double.class))));
+                            Log.d("long",(latLngs.get(0).latitude)+"");
+                            marker.add(mMap.addMarker(new MarkerOptions().position(latLngs.get(i)).title(dataSnapshot.child((i+1)+"").child("Tempat")
+                                    .getValue(String.class))
+                                    .snippet(geoCode)));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
-                    public boolean onMarkerClick(Marker marker) {
+                    public boolean onMarkerClick(Marker markerNama) {
                         String childMarker = null;
-                        for (int i = 0; i< 5; i++){
-                        if (marker.equals(arrayMarker[i])) {
-                            Log.d("marker lewat ", arrayMarker[i]+"");
-                            childMarker = arrayMarker[i].getTitle();
+                        for (i = 0; i< count; i++){
+                        if (markerNama.equals(marker.get(i))) {
+                            Log.d("marker lewat ", marker.get(i)+"");
+                            childMarker = marker.get(i).getTitle();
+
+
                             for (int a = 0;a<50;a++){
                                 Log.d("ini a"+a,"ini i"+i);
                                 if (geoCode == null) {
-                                    cekTempatMarker(lattitude[i], longitude[i]);
-
+                                    cekTempatMarker(latLngs.get(i).latitude, latLngs.get(i).longitude);
+                                    break;
                                 } else {
-                                    cekTempatMarker(lattitude[i], longitude[i]);
-                                    arrayMarker[i].setSnippet(geoCode);
+                                    cekTempatMarker(latLngs.get(i).latitude, latLngs.get(i).longitude);
+                                    marker.get(i).setSnippet(geoCode);
                                     break;
                                     }
                             }
                         }
                         }
                         final String finalChildMarker = childMarker;
-                        parent_name = childMarker;
-                        Intent intent = new Intent(getContext(), Main3Activity.class);
-                        intent.putExtra("parent_name", parent_name);
+                        parent_name = "FILKOM";
+                        countBank = i;
+//                        Intent intent = new Intent(getContext(), Main3Activity.class);
+//                        Log.d(TAG, "onMarkerClick: "+countBank);
+//                        intent.putExtra("count", ""+countBank);
+//                        intent.putExtra("parent_name", parent_name);
                         btn_tambah.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -163,7 +189,7 @@ public class HomeFragment extends Fragment {
                             }
                         });
 
-                        database.child("sampah").child(childMarker).addValueEventListener(new ValueEventListener() {
+                        database.child("sampah").child(i+"").child("FILKOM").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 

@@ -45,7 +45,7 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
     private EditText editTextHarga, editTextKuantitas;
     private String stringJenis = "Plastik", parent_name;
     private Button btnPost,btnSelect;
-
+    private long count;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private static final int PICK_IMAGE_REQUEST = 234;
@@ -58,9 +58,22 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_sampah);
+        if(getIntent().hasExtra("parent_name") && getIntent().hasExtra("count")){
 
-        parent_name = getIntent().getStringExtra("parent_name");
+            String parent_names = getIntent().getStringExtra("parent_name");
+            Log.d("tag", "onCreate: "+parent_name);
 
+            Log.d("ini count", getIntent().getStringExtra("count")+"");
+            String counts = getIntent().getStringExtra("count");
+            parent_name = parent_names;
+            count = Integer.parseInt(counts);
+
+        }
+        HomeFragment hf = new HomeFragment();
+        count = hf.count;
+        parent_name = hf.parent_name;
+
+        Log.d("ini count", count+""+parent_name);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -124,8 +137,12 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
                                     String sampah = db.push().getKey();
                                     String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                                     Sampah post = new Sampah(parent_name, stringJenis, editTextHarga.getText().toString(),downloadUrl.toString(),date,editTextKuantitas.getText().toString());
-
-                                    db.child(getIntent().getStringExtra("arrayMarker")).push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    Log.d("cek", Integer.parseInt(count+1)+"");
+                                    db.child((1+count)+"")
+                                            .child("FILKOM")
+                                            .push()
+                                            .setValue(post)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             editTextHarga.setText("");
