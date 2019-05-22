@@ -5,23 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".tambah_sampah">
+    android:orientation="vertical">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="15dp">
+
     <Spinner
-        android:scrollbarSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbarSize="20dp" />
 
     <EditText
-        android:id="@+id/et_kuantitas"
+        android:id="@+id/et_berat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Berat Sampah (kg)"
@@ -36,8 +37,8 @@
     <ImageView
         android:id="@+id/btn_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/coding"/>
+        android:layout_height="367dp"
+        android:src="@drawable/imagelogo" />
 
     <Button
         android:id="@+id/btn_pilih"

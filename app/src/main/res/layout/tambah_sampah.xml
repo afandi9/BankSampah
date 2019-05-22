@@ -22,11 +22,12 @@
         android:hint="Harga Sampah"
         android:textSize="18sp" />
     --coba aja
+
     <ImageView
         android:id="@+id/btn_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/coding"/>
+        android:layout_height="418dp"
+        android:src="@drawable/imagelogo" />
 
     <Button
         android:id="@+id/btn_pilih"
